@@ -3,11 +3,25 @@ import { Produto } from './Produto'
 export class Carrinho {
   private readonly produtos: Produto[] = []
 
-  // prod2? significa parâmetro opcional
-  adiciona(prod1: Produto, prod2?: Produto): void {
-    this.produtos.push(prod1)
-    if (prod2) {
-      this.produtos.push(prod2)
+
+  static novosProdutos(...p: string[]): Produto[] {
+    const produtosNovos: Produto[] = [];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i: number = 0; i < p.length; i++) {
+      if (p[i]) {
+        const produto = new Produto(p[i]);
+        produtosNovos.push(produto);
+      }
+    }
+    return produtosNovos;
+  }
+
+  adiciona(...prod: Produto[]): void {
+    // tslint:disable-next-line: prefer-for-of
+    for (let i: number = 0; i < prod.length; i++) {
+      if (prod[i]) {
+        this.produtos.push(prod[i]);
+      }
     }
   }
 
